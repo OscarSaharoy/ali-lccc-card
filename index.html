@@ -9,16 +9,578 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
 
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+
 * {
     margin: 0;
     padding: 0;
+    font-family: "Crimson Pro", serif;
 }
+
+
+/* Base Styles */
+body, html {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  position: relative;
+  perspective: 800px;
+  overflow: hidden;
+  background: white;
+}
+
+img {
+ image-rendering: pixelated;
+ border-radius: 6px;
+}
+
+/* Envelope Styles */
+.envelope {
+  z-index: 2;
+  position: absolute;
+  width: 550px;
+  height: 366.66667px;
+  top: 50%;
+  left: 50%;
+  margin-top: -183.33333px;
+  margin-left: -275px;
+  transform-style: preserve-3d;
+  transform-origin: right center;
+  transition: transform 1s ease;
+  color: #1F1F1F;
+}
+
+.envelope .front,
+.envelope .back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #FFF;
+  border-radius: 5px;
+  box-shadow: 0 0 30px -5px #bbbb;
+}
+
+.envelope .front {
+  backface-visibility: hidden;
+  cursor: pointer;
+  display: table;
+}
+
+.envelope .front:focus {
+  outline: none;
+}
+
+.envelope .front .stamp {
+  transform: translate3d(0, 0, 1px);
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  right: 10px;
+  top: 10px;
+  padding: 10px;
+  background: radial-gradient(rgba(0, 0, 0, 0) 0px, rgba(0, 0, 0, 0) 4px, #f6f6df 4px, #f6f6df);
+  background-size: 20px 20px;
+  background-position: -10px -10px;
+}
+
+.envelope .front .stamp::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: #FFF;
+  border-radius: 2px;
+}
+
+.envelope .front .mail {
+  text-align: center;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.envelope .front .mail p {
+  font-weight: bold;
+  margin: 0;
+}
+
+.envelope .back .letter {
+  display: grid;
+  place-items: center;
+  gap: 5px;
+  text-align: center;
+  padding: 20px;
+}
+
+.envelope .back .letter p {
+  font-size: 30px;
+  color: #ff969f;
+  display: grid;
+}
+
+.envelope .front .mail p:first-child {
+  font-size: 50px;
+  line-height: 50px;
+  color: #ff969f;
+}
+
+.envelope .front .mail p:last-child {
+  font-size: 30px;
+}
+
+.envelope .back .letter p {
+  font-size: 15px;
+  color: black;
+}
+
+
+.envelope .back {
+  transform: rotateY(180deg) translate3d(0, 0, 1px);
+}
+
+.envelope .back .flip {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.envelope .back .flip::before {
+  content: "";
+  position: absolute;
+  background-color: #FFF;
+  box-shadow: 0px 0px 100px #bbbb;
+}
+
+.envelope .back .top-flip::before,
+.envelope .back .bottom-flip::before {
+  width: 388.90873px;
+  height: 388.90873px;
+}
+
+.envelope .back .top-flip {
+  z-index: 5;
+  transform-origin: top center;
+}
+
+.envelope .back .top-flip::before {
+  transform-origin: top left;
+  transform: rotate(-45deg);
+  border-bottom-left-radius: 50px;
+  border-top-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.envelope .back .bottom-flip {
+  z-index: 4;
+}
+
+.envelope .back .bottom-flip::before {
+  transform-origin: left bottom;
+  transform: rotate(45deg) translate(-15px, -15px);
+  border-top-left-radius: 100px;
+  border-bottom-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.envelope .back .left-flip::before,
+.envelope .back .right-flip::before {
+  width: 269.27249px;
+  height: 269.27249px;
+  top: -5px;
+}
+
+.envelope .back .left-flip {
+  z-index: 3;
+}
+
+.envelope .back .left-flip::before {
+  transform-origin: top left;
+  transform: rotate(45deg);
+  border-top-left-radius: 20px;
+  border-bottom-right-radius: 30px;
+  border-top-right-radius: 5px;
+}
+
+.envelope .back .right-flip {
+  z-index: 2;
+}
+
+.envelope .back .right-flip::before {
+  right: 0;
+  transform-origin: top right;
+  transform: rotate(-45deg);
+  border-top-right-radius: 20px;
+  border-bottom-left-radius: 30px;
+  border-top-left-radius: 5px;
+}
+
+.envelope .back .letter {
+  z-index: 1;
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  width: 530px;
+  height: 346.66667px;
+  background-color: #FFF;
+  border-radius: 5px;
+  box-sizing: border-box;
+  box-shadow: 0px 1px 100px #bbbb;
+}
+
+.envelope .back .letter div {
+  position: relative;
+  margin-top: 25px;
+}
+
+.envelope .back .letter label {
+  position: absolute;
+  font-size: 16px;
+  line-height: 25px 40px;
+  opacity: 0;
+  top: -15px;
+  transition: all 0.1s linear;
+  color: #ADADAD;
+}
+
+.envelope .back .letter label.show {
+  opacity: 1;
+  top: -18px;
+}
+
+.envelope .back .letter label.focus {
+  color: inherit;
+}
+
+.envelope .back .letter ::placeholder {
+  color: #ADADAD;
+}
+
+.envelope .back .letter input[type='text'],
+.envelope .back .letter textarea {
+  border: none;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 5px;
+  margin: 0;
+  background-color: #F6F6DF;
+}
+
+.envelope .back .letter input:focus,
+.envelope .back .letter textarea:focus {
+  outline: none;
+}
+
+.envelope .back .letter input,
+.envelope .back .letter textarea {
+  font-family: "Allan", sans-serif;
+  font-size: 20px;
+}
+
+.envelope .back .letter input[type='text'] {
+  height: 33px;
+}
+
+.envelope .back .letter input[type='submit'] {
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  border-radius: 2px;
+  padding: 5px 20px;
+  background-color: #e7e1bc;
+  margin: 0;
+  transition: all 0.1s linear;
+}
+
+.envelope .back .letter input[type='submit']:hover {
+  background-color: #DCD0AA;
+}
+
+.envelope .back .letter textarea {
+  resize: none;
+  height: 117.66667px;
+}
+
+/* Animation Classes */
+.envelope.new {
+  animation: new 1s forwards;
+}
+
+.envelope.open {
+  animation: open 3s forwards;
+}
+
+.envelope.open .top-flip {
+  animation: flip-open 1s 1s forwards;
+}
+
+.envelope.open .letter {
+  animation: letter-out 1s 2s forwards;
+}
+
+.envelope.send {
+  animation: send 4s forwards;
+}
+
+.envelope.send .top-flip {
+  transform: rotateX(-180deg);
+  z-index: -1;
+  animation: flip-close 1s 1s forwards;
+}
+
+.envelope.send .letter {
+  animation: letter-in 1s forwards;
+}
+
+/* Keyframe Animations */
+@keyframes new {
+  0% {
+    left: 0%;
+    margin-left: -550px;
+  }
+  100% {
+    left: 50%;
+    margin-left: -275px;
+  }
+}
+
+@keyframes open {
+  0% {
+    transform: translate3d(0, 0, 0) rotateY(0);
+  }
+  33.333% {
+    transform: translate3d(-100%, 0, 0) rotateY(-180deg);
+  }
+  66.666% {
+    transform: translate3d(-100%, 0, 0) rotateY(-180deg);
+  }
+  100% {
+    transform: translate3d(-100%, 733.33333px, 0) rotateY(-180deg);
+  }
+}
+
+@keyframes flip-open {
+  0% {
+    transform: rotateX(0deg);
+    z-index: 5;
+  }
+  50% {
+    transform: rotateX(0deg);
+    z-index: 5;
+  }
+  100% {
+    transform: rotateX(-180deg);
+    z-index: -1;
+  }
+}
+
+@keyframes letter-out {
+  0% {
+    transform: translate3d(0, 0, 0);
+    box-shadow: 0 0px 30px -5px #bbbb;
+  }
+  100% {
+    transform: translate3d(0, -733.33333px, 0);
+    box-shadow: 0 0px 30px -5px #bbbb;
+  }
+}
+
+@keyframes send {
+  0% {
+    transform: translate3d(-100%, 733.33333px, 0) rotateY(-180deg);
+    left: 50%;
+    margin-left: -275px;
+  }
+  25% {
+    transform: translate3d(-100%, 0, 0) rotateY(-180deg);
+    left: 50%;
+    margin-left: -275px;
+  }
+  50% {
+    transform: translate3d(-100%, 0, 0) rotateY(-180deg);
+    left: 50%;
+    margin-left: -275px;
+  }
+  75% {
+    transform: translate3d(0, 0, 0) rotateY(0deg);
+    left: 50%;
+    margin-left: -275px;
+  }
+  100% {
+    transform: translate3d(0, 0, 0) rotateY(0deg);
+    left: 100%;
+    margin-left: 20px;
+  }
+}
+
+@keyframes flip-close {
+  0% {
+    transform: rotateX(-180deg);
+    z-index: -1;
+  }
+  50% {
+    transform: rotateX(0deg);
+    z-index: 5;
+  }
+  100% {
+    transform: rotateX(0deg);
+    z-index: 5;
+  }
+}
+
+@keyframes letter-in {
+  0% {
+    transform: translate3d(0, -733.33333px, 0);
+    box-shadow: inset 0 0px 30px -5px #bbbb, 0 0 20px -5px;
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+    box-shadow: inset 0 0px 30px -5px #bbbb, 0 0 10px -5px;
+  }
+}
+
     </style>
 </head>
 
 <body>
     
-    
+<canvas id="confetti"></canvas>
+
+<div class="envelope new">
+  <div class="front">
+    <div class="mail">
+      <p>Click me</p>
+    </div>
+  </div>
+  <div class="back">
+    <div class="letter">
+        <p> A massive Thankyou Ali from your Team!! </p>
+        <img src="team.png" style="height: 200px;" />
+        <p> We have had such an amazing time working together and we will never forget the happy memories we made together. Thankyou for supporting us through so much, we could not have wished for a better manager and friend :) </p>
+        <p> Best Wishes for your future and hope our paths cross again! </p>
+    </div>
+    <div class="flip left-flip"></div>
+    <div class="flip right-flip"></div>
+    <div class="flip bottom-flip"></div>
+    <div class="flip top-flip"></div>
+  </div>
+</div>
+
+<script>
+
+const NUM_CONFETTI = 350;
+const COLORS = [[0,126,199], [73,173,51], [245,197,0], [124,78,12]]
+const PI_2 = 2 * Math.PI;
+
+// Canvas setup
+const canvas = document.getElementById('confetti');
+const context = canvas.getContext('2d');
+let w = 0;
+let h = 0;
+
+function resizeWindow() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+}
+
+window.addEventListener('resize', resizeWindow, false);
+
+window.onload = function() {
+    setTimeout(resizeWindow, 0);
+};
+
+function range(a, b) {
+    return (b - a) * Math.random() + a;
+}
+
+function drawCircle(x, y, r, style) {
+    context.beginPath();
+    context.arc(x, y, r, 0, PI_2, false);
+    context.fillStyle = style;
+    context.fill();
+}
+
+let xpos = 0.5;
+
+window.requestAnimationFrame = window.requestAnimationFrame ||
+    window.webkitRequestAnimationFrame ||
+    window.mozRequestAnimationFrame ||
+    window.oRequestAnimationFrame ||
+    window.msRequestAnimationFrame ||
+    function(callback) { 
+        window.setTimeout(callback, 1000 / 60);
+    };
+
+class Confetti {
+    constructor() {
+        this.style = COLORS[Math.floor(range(0, 4))];
+        this.rgb = `rgba(${this.style[0]},${this.style[1]},${this.style[2]}`;
+        this.r = Math.floor(range(2, 6));
+        this.r2 = 2 * this.r;
+        this.replace();
+    }
+
+    replace() {
+        this.opacity = 0;
+        this.dop = 0.03 * range(1, 4);
+        this.x = range(-this.r2, w - this.r2);
+        this.y = range(-20, h - this.r2);
+        this.xmax = w - this.r;
+        this.ymax = h - this.r;
+        this.vx = range(0, 2) + 8 * xpos - 5;
+        this.vy = 0.7 * this.r + range(-1, 1);
+    }
+
+    draw() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.opacity += this.dop;
+        if (this.opacity > 1) {
+            this.opacity = 1;
+            this.dop *= -1;
+        }
+        
+        if (this.opacity < 0 || this.y > this.ymax) {
+            this.replace();
+        }
+        
+        if (!(0 < this.x && this.x < this.xmax)) {
+            this.x = (this.x + this.xmax) % this.xmax;
+        }
+        
+        drawCircle(Math.floor(this.x), Math.floor(this.y), this.r, `${this.rgb},${this.opacity})`);
+    }
+}
+
+// Initialize confetti array
+const confetti = Array.from({length: NUM_CONFETTI}, () => new Confetti());
+
+function step() {
+    requestAnimationFrame(step);
+    context.clearRect(0, 0, w, h);
+    confetti.forEach(c => c.draw());
+}
+
+let started = false;
+
+document.addEventListener('DOMContentLoaded', function() {
+  const envelope = document.querySelector('.envelope');
+
+  if (!envelope?.classList.contains('open')) {
+    envelope?.addEventListener('click', function() {
+      this.classList.remove('new');
+      this.classList.add('open');
+      if(!started) {
+        step();
+        started = true;
+      }
+    });
+  }
+});
+
+</script>
 
 </body>
 
