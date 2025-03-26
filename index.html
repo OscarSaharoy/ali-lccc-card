@@ -6,7 +6,6 @@
 <head>
     <title> Ali 🎉 </title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
 
 @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200..900;1,200..900&display=swap');
@@ -96,45 +95,20 @@ img {
 }
 
 .envelope .front .mail {
+  padding: 25px;
   text-align: center;
-  display: table-cell;
-  vertical-align: middle;
-}
-
-.envelope .front .mail p {
-  font-weight: bold;
-  margin: 0;
+  display: grid;
+  place-items: center;
+  gap: 10px;
+  height: 310px;
 }
 
 .envelope .back .letter {
   display: grid;
   place-items: center;
-  gap: 5px;
   text-align: center;
-  padding: 20px;
+  padding: 40px;
 }
-
-.envelope .back .letter p {
-  font-size: 30px;
-  color: #ff969f;
-  display: grid;
-}
-
-.envelope .front .mail p:first-child {
-  font-size: 50px;
-  line-height: 50px;
-  color: #ff969f;
-}
-
-.envelope .front .mail p:last-child {
-  font-size: 30px;
-}
-
-.envelope .back .letter p {
-  font-size: 15px;
-  color: black;
-}
-
 
 .envelope .back {
   transform: rotateY(180deg) translate3d(0, 0, 1px);
@@ -441,6 +415,10 @@ img {
   }
 }
 
+.st {
+    text-decoration: line-through;
+}
+
     </style>
 </head>
 
@@ -451,15 +429,19 @@ img {
 <div class="envelope new">
   <div class="front">
     <div class="mail">
-      <p>Click me</p>
+      <h2> To Ali </h2>
+      <p> From your team 😊</p>
+      <img src="team.png" style="height: 200px;" />
+      <p>Click me!</p>
     </div>
   </div>
   <div class="back">
     <div class="letter">
-        <p> A massive Thankyou Ali from your Team!! </p>
-        <img src="team.png" style="height: 200px;" />
-        <p> We have had such an amazing time working together and we will never forget the happy memories we made together. Thankyou for supporting us through so much, we could not have wished for a better manager and friend :) </p>
-        <p> Best Wishes for your future and hope our paths cross again! </p>
+        <p> Thankyou so much Ali!! </p>
+        <p> We have had such an amazing time working together and we will never forget the happy memories we made. Thankyou for supporting us through so much, we could not have wished for a better manager and friend :) </p>
+        <p> We are so lucky to have had someone like you to help us navigate the transition from scrum to scrumban to scrum to kanban to scrum 🤝 Don't forget about us when you are a startup billionaire, we are always here and looking forward to hearing from you! </p>
+        <p> Best Wishes for your future and hope our paths cross again 🫡 </p>
+        <p> from your <span class="st">team</span> <span class="st">squad</span> team, <br> Rekha, Adnan and Oscar </p>
     </div>
     <div class="flip left-flip"></div>
     <div class="flip right-flip"></div>
